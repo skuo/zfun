@@ -1,0 +1,18 @@
+add file /home/skuo/resptime_size_map.rb;
+add file /home/skuo/resptime_size_red.rb;
+
+-- set hive.exec.reducers.max=1
+-- set mapred.reduce.tasks=1
+
+FROM (
+  FROM access_log_small a
+  SELECT TRANSFORM(a.resptime, a.size)
+  USING './resptime_size_map.rb'
+  AS resptime, size
+  CLUSTER BY resptime ) map_out
+INSERT OVERWRITE TABLE test_resptime_size_reduced
+  SELECT TRANSFORM( map_out.resptime, map_out.size)
+  USING './resptime_size_red.rb'
+  AS resptime, size
+;
+

@@ -1,0 +1,13 @@
+add file /home/skuo/resptime_size_map.rb;
+
+-- set hive.exec.script.allow.partial.consumption=true
+
+-- run transform
+INSERT OVERWRITE TABLE test_resptime_size
+select 
+  transform (a.resptime, a.size)
+  using 'resptime_size_map.rb'
+  as (resptime, size)
+from
+   access_log_small a
+;

@@ -1,0 +1,6 @@
+ INFO 2011-09-02 13:45:51,240 [main] (org.apache.http.impl.client.DefaultRequestDirector:644) - I/O exception (java.io.FileNotFoundException) caught when processing request: /home/skuo/vmDevEnviron (No such file or directory)
+ INFO 2011-09-02 13:45:51,281 [main] (org.apache.http.impl.client.DefaultRequestDirector:651) - Retrying request
+ INFO 2011-09-02 13:45:51,283 [main] (org.apache.http.impl.client.DefaultRequestDirector:644) - I/O exception (java.io.FileNotFoundException) caught when processing request: /home/skuo/vmDevEnviron (No such file or directory)
+ INFO 2011-09-02 13:45:51,284 [main] (org.apache.http.impl.client.DefaultRequestDirector:651) - Retrying request
+ INFO 2011-09-02 13:45:51,285 [main] (org.apache.http.impl.client.DefaultRequestDirector:644) - I/O exception (java.io.FileNotFoundException) caught when processing request: /home/skuo/vmDevEnviron (No such file or directory)
+ INFO 2011-09-02 13:45:51,285 [main] (org.apache.http.impl.client.DefaultRequestDirector:651) - Retrying request

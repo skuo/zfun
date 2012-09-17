@@ -1,0 +1,23 @@
+add file /home/skuo/reporting/clicks_red.rb;
+
+-- set hive.exec.script.allow.partial.consumption=true
+
+set hive.exec.reducers.max=50;
+set mapred.reduce.tasks=50;
+
+-- Below settings may have compressed intermediate data but not output
+-- set mapred.output.compress=true;
+-- set hive.exec.compress.output=true;
+-- set mapred.output.compression.codec=org.apache.hadoop.io.compress.GzipCodec;
+-- set io.compression.codecs=org.apache.hadoop.io.compress.GzipCodec;
+
+FROM (
+    SELECT customer_id, ypid, listing_id, tier, uip
+    FROM skuo_clicks 
+    -- WHERE  yyyy=2011 and mm=11 and dd=01 
+    DISTRIBUTE BY customer_Id, ypid
+) red_in
+SELECT TRANSFORM( red_in.customer_id, red_in.ypid, red_in.listing_id, red_in.tier, red_in.uip)
+USING './clicks_red.rb'
+AS customer_id, ypid, pll, diamond, platinum, gold, silver, bronze, ips, count 
+;

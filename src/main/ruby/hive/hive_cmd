@@ -1,0 +1,40 @@
+* log in to skynet and type "hive" at command line
+
+hive> show databases;
+hive> use default;
+hive> show tables;
+
+hive> show table '.*s';
+Lists all tables that end with 's'.
+hive> show table 'traffic.*';
+Lists all tables that begin with 'traffic'.
+
+hive> describe invites;
+
+hive> LOAD DATA INPATH '%s' OVERWRITE INTO TABLE access_log PARTITION (type='%s', ondate='%s');
+
+hive> select * from access_log limit 10;
+hive> select count(*) from access_log;
+
+[bash] /home/t/hive_current/bin/hive -e "describe adsvc_imp_clk;"
+[bash] hive -e "select count(*) from access_log where method = 'GET'";
+[bash] hive -f test.sql > test.out | tee test.outhive
+[bash] hive -e "ALTER TABLE test_resptimeband_reduced ADD COLUMNS(count BIGINT)";
+
+# These commands work
+[bash] hive -f map.hsql
+[bash] hive -f map1.hsql
+[bash] hive -f mapred.hsql
+[bash] hive -f resptimeband_mapred.hsql
+
+# debugging hive ruby streaming
+cat access_log_small.data | ruby resptimeband_map.rb | ruby resptimeband_red.rb
+
+# UDF 
+# @mac
+[bash] cd ~/proj_atti/zfun
+[bash] mvn clean install
+[bash] scp target/zfun-0.0.1-SNAPSHOT.jar @skynet.wc1.yellowpages.com:.
+[bash] scp src/main/ruby/hive/bandname.hsql @skynet.wc1.yellowpages.com:.
+# @skynet
+hive -f bandname.hsql

@@ -1,0 +1,18 @@
+add file /home/skuo/resptimeband_map.rb;
+add file /home/skuo/resptimeband_red.rb;
+
+set hive.exec.reducers.max=2;
+set mapred.reduce.tasks=2;
+
+FROM (
+  FROM access_log_small a
+  SELECT TRANSFORM(a.resptime)
+  USING './resptimeband_map.rb'
+  AS band, resptime
+  CLUSTER BY band ) map_out
+INSERT OVERWRITE TABLE test_resptimeband_reduced
+  SELECT TRANSFORM( map_out.band, map_out.resptime)
+  USING './resptimeband_red.rb'
+  AS band, total, count
+;
+

@@ -1,0 +1,5 @@
+add jar /home/skuo/zfun-0.0.1-SNAPSHOT.jar;
+create temporary function bandname as 'org.zfun.hive.BandName';
+create temporary function simpletext as 'org.zfun.hive.SimpleText';
+select bandname(cast(band as string)), resptime, count from test_resptimeband_reduced;
+select simpletext(url) from access_log_small limit 1;

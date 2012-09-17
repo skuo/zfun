@@ -1,0 +1,11 @@
+add file /home/skuo/resptime_size_map.rb;
+
+INSERT OVERWRITE TABLE test_resptime_size
+SELECT * FROM
+(
+FROM access_log_small a
+MAP a.resptime, a.size
+USING './resptime_size_map.rb'
+AS resptime, size
+) b
+;

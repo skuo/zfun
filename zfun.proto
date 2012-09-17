@@ -1,0 +1,35 @@
+package ProfileIdBuffers;
+
+option java_package = "org.zfun.proto";
+option java_outer_classname = "ZfunBuffers";
+option optimize_for = SPEED;
+
+enum ZfunType {
+  FOOTBALL = 0;
+  BASKETBALL = 1;
+}
+
+message ZfunGame {
+  required string id = 1;
+  required int64 timestamp = 2;
+  required ZfunType type = 3;
+  optional string opponent = 4;
+  repeated string person = 5;
+};
+
+message Person {
+  optional bool isAttending = 2 [default = true]; 
+  repeated Food foods = 3;
+  repeated Drink drinks = 4;
+};
+
+message Food {
+  optional string name = 1;
+  optional int32 numPersonFed = 2;
+};
+
+message Drink {
+  optional string name = 1;
+  optional int32 quantity = 2;
+};
+

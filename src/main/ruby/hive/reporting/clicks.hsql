@@ -1,0 +1,3 @@
+select a.customer_id, a.ypid, a.listing_id, a.tier, ta.uip
+from traffic_adclick ta join advertiser_extract_vw a on ta.lid=a.listing_id 
+where ta.tq='0' and ta.cstm='1' and ta.yyyy=2011 and ta.mm=11 and ta.dd=01 and a.ds=20111101

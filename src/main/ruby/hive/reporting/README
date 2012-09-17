@@ -1,0 +1,43 @@
+----------
+Hive Query
+----------
+* clicks.hsql is the hive query to retrieve customer and click information by listing_id.
+
+=================================================
+Count customer and click info for a day
+=================================================
+------------
+Ruby Scripts
+------------
+* clicks_map.rb:    map script
+* clicks_red.rb:    reduce script
+
+Testing ruby scripts
+
+cat clicks_red.data |ruby clicks_red.rb
+
+--------------
+Hive MapReduce
+--------------
+hive -f clicks_red.hsql > clicks_red.out
+
+=================================================
+Save the join result customer and click info each
+and run MR on them
+=================================================
+------------------------
+Hive Table Create Script
+------------------------
+* skuo_clicks.hsql
+
+----------------------------------------
+Ruby Script for Saving Joined Daily Data
+----------------------------------------
+* ruby tbl_clicks.rb
+
+* hive -e "select count(*) from skuo_clicks where yyyy=2011 and mm=11 and dd=01"
+
+--------------
+Hive MapReduce
+--------------
+hive -f tbl_clicks_red.hsql > tbl_clicks_red.out

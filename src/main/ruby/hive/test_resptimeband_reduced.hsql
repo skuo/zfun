@@ -1,0 +1,7 @@
+CREATE TABLE test_resptimeband_reduced (
+  band BIGINT,
+  resptime BIGINT,
+  count BIGINT)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+STORED AS TEXTFILE;

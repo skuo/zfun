@@ -1,0 +1,10 @@
+Set hive.exec.reducers.max=50;
+set mapred.reduce.tasks=50;
+
+select c.customer_id, c.ypid, c.listing_id, b.budget_map['cid'], b.budget_map['ypid'], b.budget_map['boost']
+from skuo_clicks c join skuo_budget b 
+where c.customer_id = b.budget_map['cid'] and c.ypid = b.budget_map['ypid'] 
+  and c.yyyy=2012 and c.mm=02 and c.dd=19 
+  and b.yyyy=2012 and b.mm=02 and b.dd=19
+-- DISTRIBUTE BY c.customer_id, c.ypid
+;

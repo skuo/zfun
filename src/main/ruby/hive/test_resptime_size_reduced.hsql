@@ -1,0 +1,6 @@
+CREATE TABLE test_resptime_size_reduced (
+  resptime BIGINT,
+  size BIGINT)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+STORED AS TEXTFILE;

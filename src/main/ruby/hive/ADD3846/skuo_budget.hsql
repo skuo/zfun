@@ -1,0 +1,15 @@
+CREATE EXTERNAL TABLE skuo_budget (
+  budget_map MAP<STRING,STRING>)
+PARTITIONED BY (yyyy INT, mm INT, dd INT)
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '\003'
+  COLLECTION ITEMS TERMINATED BY '\001'
+  MAP KEYS TERMINATED BY '\002'
+STORED AS TEXTFILE
+LOCATION 'hdfs://namenode-sandbox.wc1.yellowpages.com:9000/user/skuo/budget';
+
+ALTER TABLE skuo_budget ADD IF NOT EXISTS PARTITION (yyyy=2012,mm=03,dd=01) LOCATION '/user/skuo/budget/2012/03/01';
+
+-- DESCRIBE EXTENDED skuo_budget PARTITION (yyyy=2012,mm=03,dd=01);
+
+select budget_map['cid'], budget_map['ypid'] from skuo_budget LIMIT 3;

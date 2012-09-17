@@ -1,0 +1,3 @@
+insert overwrite table access_log_small partition(type = 'adsvc', ondate = '20110723')
+select host, time, status, resptime, size, method, url, version, params
+from access_log where access_log.type = 'adsvc' and access_log.ondate = '20110723' limit 1000;

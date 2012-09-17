@@ -1,0 +1,11 @@
+CREATE TABLE skuo_clicks (
+  customer_id STRING,
+  ypid STRING,
+  listing_id STRING,
+  tier STRING,
+  uip STRING)
+COMMENT 'This is the table that stores clicks joined with customer info' 
+partitioned by (yyyy INT, mm INT, dd INT)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+STORED AS TEXTFILE;

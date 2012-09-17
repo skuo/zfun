@@ -1,0 +1,1 @@
+tcbmgr optimize -nl /tmp/cookie.tcb

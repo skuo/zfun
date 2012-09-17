@@ -1,0 +1,18 @@
+add file /home/skuo/reporting/clicks_red.rb;
+
+-- set hive.exec.script.allow.partial.consumption=true
+
+set hive.exec.reducers.max=10;
+set mapred.reduce.tasks=10;
+
+FROM (
+    SELECT a.customer_id, a.ypid, a.listing_id, a.tier, ta.uip
+    FROM traffic_adclick ta join advertiser_extract_vw a on ta.lid=a.listing_id 
+    WHERE ta.tq='0' and ta.cstm='1' and ta.yyyy=2011 and ta.mm=11 and ta.dd=01 and a.ds=20111101
+    DISTRIBUTE BY a.customer_id, a.ypid
+) red_in
+SELECT TRANSFORM( red_in.customer_id, red_in.ypid, red_in.listing_id, red_in.tier, red_in.uip)
+USING './clicks_red.rb'
+AS customer_id, ypid, pll, diamond, platinum, gold, silver, bronze, count 
+;
+

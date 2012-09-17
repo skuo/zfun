@@ -1,0 +1,10 @@
+describe access_log;
+
+-- comment
+
+select * from access_log limit 10;
+
+select * from access_log_small limit 10;
+
+select count(*) from access_log_small;
+

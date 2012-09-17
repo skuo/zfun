@@ -1,0 +1,15 @@
+select count(*)
+from traffic_adclick ta  
+where ta.tq='0' and ta.cstm='1' and ta.yyyy=2012 and ta.mm=03 and ta.dd=01;
+
+select count(*) from skuo_budget where cast(budget_map['boost'] as FLOAT) > 0.005;
+
+SELECT count(*),
+SUM ( 
+  CASE 
+    WHEN cast(budget_map['boost'] as FLOAT) > 0.005 THEN 1
+    ELSE 0
+  END
+)
+FROM skuo_budget
+;

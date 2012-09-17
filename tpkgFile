@@ -1,0 +1,11 @@
+book-jaxb.copy
+book-jaxb.gz
+book-jaxb.xml
+booklet-jaxb.xml
+bookstore-jaxb.xml
+pom.xml
+src
+target
+tpkgFile
+git
+zfun

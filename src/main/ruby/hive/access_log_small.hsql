@@ -1,0 +1,15 @@
+CREATE TABLE access_log_small (
+  host STRING,
+  time STRING,
+  status STRING,
+  resptime BIGINT,
+  size BIGINT, 
+  method STRING,
+  url STRING,
+  version STRING,
+  params MAP<STRING, STRING>)
+COMMENT 'This is the table that stores access log records' 
+PARTITIONED BY(type STRING, ondate STRING) 
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+STORED AS TEXTFILE;
