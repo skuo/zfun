@@ -11,6 +11,7 @@ public class SpiderTest {
 		Spider spider = new Spider();
         int i = 100;
         assertEquals(100, spider.calculate(i), 0.0001);
+        assertEquals(4, spider.sqrt(16), 0.0001);
     }
 
 }
