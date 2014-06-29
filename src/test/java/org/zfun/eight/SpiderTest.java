@@ -1,11 +1,15 @@
 package org.zfun.eight;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 import org.junit.Test;
 
@@ -78,5 +82,27 @@ public class SpiderTest {
 		Converter<String, String> converter2 = spider::startsWith;
 		assertEquals("B",converter2.convert("Black Widow"));		
 		
+	}
+	
+	/*
+	 * Represents a predicate (boolean-valued function) of one argument. 
+	 * This is a functional interface whose functional method is test(Object).
+	 */
+	@Test
+	public void testPredicate() {
+		Predicate<String> predicate = (s) -> s.length() > 0;
+		assertTrue(predicate.test("foo"));              // true
+		assertFalse(predicate.negate().test("foo"));     // false
+
+		Predicate<Boolean> nonNull = Objects::nonNull;
+		Predicate<Boolean> isNull = Objects::isNull;
+		assertTrue(nonNull.test(Boolean.TRUE));
+		assertFalse(nonNull.test(null));
+		assertFalse(isNull.test(Boolean.FALSE));
+		assertTrue(isNull.test(null));
+		
+		Predicate<String> isEmpty = String::isEmpty;
+		assertTrue(isEmpty.test(""));
+		//assertTrue(isEmpty.test(null));  // this throws NullPointerException, does not check for null
 	}
 }
