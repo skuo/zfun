@@ -1,8 +1,11 @@
 package org.zfun.eight;
 
+import java.util.Optional;
+
 public class Spider implements Formula {
 
 	private String species = null;
+	private String note = null;
 	
 	public String getSpecies() {
 		return species;
@@ -12,6 +15,18 @@ public class Spider implements Formula {
 		this.species = species;
 	}
 
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public Optional<String> getSpiderNote() {
+		return Optional.ofNullable(note);
+	}
+	
 	@Override
 	public double calculate(int a) {
 		return sqrt(a * 100);

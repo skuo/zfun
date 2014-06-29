@@ -9,7 +9,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import org.junit.Test;
 
@@ -81,12 +85,13 @@ public class SpiderTest {
 		Spider spider = new Spider();
 		Converter<String, String> converter2 = spider::startsWith;
 		assertEquals("B",converter2.convert("Black Widow"));		
-		
 	}
 	
 	/*
 	 * Represents a predicate (boolean-valued function) of one argument. 
 	 * This is a functional interface whose functional method is test(Object).
+	 * 
+	 * Methods: and(), isEquals(), negate(), or(), test().
 	 */
 	@Test
 	public void testPredicate() {
@@ -104,5 +109,49 @@ public class SpiderTest {
 		Predicate<String> isEmpty = String::isEmpty;
 		assertTrue(isEmpty.test(""));
 		//assertTrue(isEmpty.test(null));  // this throws NullPointerException, does not check for null
+	}
+	
+	/*
+	 * Represents a function that accepts one argument and produces a result.
+	 * This is a functional interface whose functional method is apply(Object).
+	 * 
+	 * Methods: andThen(), apply(), compose(), identity()
+	 */
+	@Test
+	public void testFunction() {
+		Function<String, Integer> toInteger = Integer::valueOf;
+		Function<String, String> backToString = toInteger.andThen(String::valueOf);
+
+		assertEquals("123",backToString.apply("123"));     // "123"
+	}
+	
+	/*
+	 * Supplier represents a supplier of results. 
+	 * Consumer accepts a single input argument and returns no result.
+	 */
+	@Test
+	public void testSupplierConsumer() {
+		Supplier<Spider> spiderSupplier = Spider::new;
+		Spider spider = spiderSupplier.get();
+		spider.setSpecies("Black Widow");
+		
+		Consumer<Spider> spiderConsumer = (s) -> s.setNote("yuck! " + s.getSpecies());
+		spiderConsumer.accept(spider);
+		
+		assertEquals("yuck! Black Widow", spider.getNote());
+	}
+	
+	@Test
+	public void testOptional() {
+		Spider spider = new Spider();
+		// if note == null, an empty Optional is returned
+		Optional<String> spiderNote = spider.getSpiderNote();
+		assertFalse(spiderNote.isPresent());
+		assertEquals("No pertinent note", spiderNote.orElse("No pertinent note"));
+		// set note to return an Optional
+		spider.setNote("Black widow is here");
+		spiderNote = spider.getSpiderNote();
+		assertTrue(spiderNote.isPresent());
+		assertEquals("Black widow is here", spiderNote.get());
 	}
 }
