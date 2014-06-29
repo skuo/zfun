@@ -50,12 +50,16 @@ public class SpiderTest {
 		// FunctionalInterface
 		CompareFunction<String, Integer> desCompFunc = (a,b) -> b.compareTo(a);
 		assertEquals(Integer.valueOf(1), desCompFunc.compareTo("a", "b"));
+		// static method and constructor references
+		CompareFunction<String, Integer> strCompFunc = String::compareTo;
+		assertEquals(Integer.valueOf(-1), strCompFunc.compareTo("a", "b"));		
 		
 		List<String> names = Arrays.asList("peter", "anna", "mike", "xenia");
 		// Showing lambda is indeed a FunctionalInterface
 		Comparator<String> strComp = (a,b) -> b.compareTo(a);
 		Collections.sort(names, strComp);
 		assertEquals(expDescendingNames, names);
+		// a neat way to create a different String comparator (by length)
 		Comparator<String> lenComp = (a,b) -> a.length() - b.length();
 		Collections.sort(names, lenComp);
 		assertEquals(4, names.get(0).length());
@@ -64,14 +68,15 @@ public class SpiderTest {
 	
 	@Test
 	public void testMethodReferences() {
-		// static method and constructor references
-		CompareFunction<String, Integer> strCompFunc = String::compareTo;
-		assertEquals(Integer.valueOf(-1), strCompFunc.compareTo("a", "b"));		
-
-		// object method and constructor references
+		// static method reference
+		Converter<String, Integer> converter = Integer::valueOf;
+		Integer converted = converter.convert("123");
+		assertEquals(Integer.valueOf(123), converted);
+		
+		// object method reference
 		Spider spider = new Spider();
-		Converter<String, String> converter = spider::startsWith;
-		assertEquals("B",converter.convert("Black Widow"));		
+		Converter<String, String> converter2 = spider::startsWith;
+		assertEquals("B",converter2.convert("Black Widow"));		
 		
 	}
 }
