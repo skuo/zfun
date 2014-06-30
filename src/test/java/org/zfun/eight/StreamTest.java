@@ -5,7 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.junit.Test;
@@ -63,5 +65,24 @@ public class StreamTest {
                 );
 		// the original names list is untouched
 		assertEquals(Arrays.asList("ddd2","aaa2","bbb1","aaa1","bbb3","ccc","bbb2","ddd1"), names);
+	}
+	
+	@Test
+	public void testMap() {
+	    Map<Integer, String> map = new HashMap<>();
+	    for (int i = 0; i < 10; i++) {
+	        map.putIfAbsent(i, "val" + i);
+	    }
+	    //
+	    map.computeIfPresent(3, (k,v) -> v + k);
+	    assertEquals("val33",map.get(3));
+	    map.computeIfPresent(9, (k,v) -> null);
+	    assertFalse(map.containsKey(9));
+	    map.computeIfAbsent(23, (k) -> "val" + k);
+	    assertEquals("val23",map.get(23));
+	    map.merge(9, "val9", (value, newValue) -> value.concat(newValue));
+	    assertEquals("val9", map.get(9));
+	    map.merge(9, "concat", (value, newValue) -> value.concat(newValue));
+	    assertEquals("val9concat", map.get(9));
 	}
 }
