@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.atomic.LongAccumulator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -153,5 +154,15 @@ public class SpiderTest {
 		spiderNote = spider.getSpiderNote();
 		assertTrue(spiderNote.isPresent());
 		assertEquals("Black widow is here", spiderNote.get());
+	}
+	
+	@Test
+	public void testAtomicAccumulator() {
+	    LongAccumulator acc = new LongAccumulator((x,y) -> x+y, 0L);
+	    assertEquals(0L, acc.longValue());
+	    acc.accumulate(1L);
+        assertEquals(1L, acc.longValue());
+        acc.accumulate(2L);
+        assertEquals(3L, acc.longValue());	    
 	}
 }
