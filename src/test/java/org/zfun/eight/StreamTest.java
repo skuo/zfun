@@ -84,5 +84,14 @@ public class StreamTest {
 	    assertEquals("val9", map.get(9));
 	    map.merge(9, "concat", (value, newValue) -> value.concat(newValue));
 	    assertEquals("val9concat", map.get(9));
+        map.merge(9, "lambda", (value, newValue) -> 
+          {
+              if (newValue.length() < value.length())
+                  return newValue;
+              else
+                  return value;
+          } 
+          );
+        assertEquals("lambda", map.get(9));
 	}
 }
