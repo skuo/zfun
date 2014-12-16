@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -93,5 +94,46 @@ public class StreamTest {
           } 
           );
         assertEquals("lambda", map.get(9));
+	}
+	
+	@Test
+	public void testStudentStream() {
+	    List<Student> students = new ArrayList<>();
+	    students.add(new Student(1L, "First Alpha"));
+	    students.add(new Student(2L, "Second Bravo"));
+	    students.add(new Student(3L, "Second Beta"));
+	    students.add(new Student(4L, "Fourth Delta"));
+	    
+	    List<Long> ids = students.stream()
+	            .filter((s) -> s.getName().startsWith("Second"))
+	            .map((s) -> s.getId())
+	            .collect(Collectors.toList());
+	    assertEquals(Arrays.asList(2L, 3L), ids);
+	}
+	
+	public class Student {
+	    private Long id;
+	    private String name;
+	    
+	    public Student(Long id, String name) {
+	        this.id = id;
+	        this.name = name;
+	    }
+	    
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+	    
 	}
 }
