@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.junit.Test;
@@ -56,7 +57,7 @@ public class StreamTest {
 		        .filter(s -> s.startsWith("_A"))
 		        .reduce("",(s1,s2) -> s1 + "#" + s2)
                 );
-        // to count, String stream must first be mapped to Long
+        // to sum, String stream must first be mapped to Long
         assertEquals(3, names.stream()
                 .map((s) -> "_" + s.toUpperCase())
                 .sorted()
@@ -109,6 +110,15 @@ public class StreamTest {
 	            .map((s) -> s.getId())
 	            .collect(Collectors.toList());
 	    assertEquals(Arrays.asList(2L, 3L), ids);
+	    
+	    // Build a HashMap
+	    Map<Long, Student> studentMap =
+	            students
+	                .stream()
+	                .collect(Collectors.toMap(Student::getId, Function.identity()));
+	    assertEquals(4, studentMap.size());
+	    assertEquals("First Alpha", studentMap.get(1L).getName());
+	    assertEquals("Fourth Delta", studentMap.get(4L).getName());
 	}
 	
 	public class Student {

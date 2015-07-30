@@ -23,6 +23,7 @@ public class Spider implements Formula {
 		this.note = note;
 	}
 
+	// Use Optional
 	public Optional<String> getSpiderNote() {
 		return Optional.ofNullable(note);
 	}
