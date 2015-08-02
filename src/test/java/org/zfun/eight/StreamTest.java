@@ -112,6 +112,10 @@ public class StreamTest {
 	            .collect(Collectors.toList());
 	    assertEquals(Arrays.asList(2L, 3L), ids);
 	    
+        tryHashMap(students);
+    }
+
+    private void tryHashMap(List<Student> students) {
         // Build a HashMap
 	    Map<Long, Student> studentMap =	students.stream()
 	                .collect(Collectors.toMap(Student::getId, Function.identity()));
