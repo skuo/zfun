@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.junit.Test;
@@ -61,7 +63,7 @@ public class StreamTest {
 		        .filter(s -> s.startsWith("_A"))
 		        .reduce("",(s1,s2) -> s1 + "#" + s2)
                 );
-        // to count, String stream must first be mapped to Long
+        // to sum, String stream must first be mapped to Long
         assertEquals(3, names.stream()
                 .map((s) -> "_" + s.toUpperCase())
                 .sorted()
@@ -102,27 +104,61 @@ public class StreamTest {
 	}
 	
 	@Test
-	public void testStudentStream() {
+	public void testStudents() {
 	    List<Student> students = new ArrayList<>();
-	    students.add(new Student(1L, "First Alpha"));
-	    students.add(new Student(2L, "Second Bravo"));
-	    students.add(new Student(3L, "Second Beta"));
-	    students.add(new Student(4L, "Fourth Delta"));
+	    students.add(new Student(1L, "First Alpha", 18));
+	    students.add(new Student(2L, "Second Bravo", 18));
+	    students.add(new Student(3L, "Second Beta", 20));
+	    students.add(new Student(4L, "Fourth Delta", 21));
 	    
 	    List<Long> ids = students.stream()
 	            .filter((s) -> s.getName().startsWith("Second"))
 	            .map((s) -> s.getId())
 	            .collect(Collectors.toList());
 	    assertEquals(Arrays.asList(2L, 3L), ids);
-	}
+	    
+        tryHashMap(students);
+    }
+
+    private void tryHashMap(List<Student> students) {
+        // Build a HashMap
+	    Map<Long, Student> studentMap =	students.stream()
+	                .collect(Collectors.toMap(Student::getId, Function.identity()));
+	    assertEquals(4, studentMap.size());
+	    assertEquals("First Alpha", studentMap.get(1L).getName());
+	    assertEquals("Fourth Delta", studentMap.get(4L).getName());
+	    
+	    // Build a HashMap where value is a list
+	    Map<Integer, List<Student>> studentsByAge = students.stream()
+	            .collect(Collectors.groupingBy(Student::getAge));
+	    assertEquals(3, studentsByAge.size());
+	    assertEquals(2, studentsByAge.get(18).size());
+	    assertEquals(1, studentsByAge.get(20).size());
+	    assertEquals(1, studentsByAge.get(21).size());
+	   
+        // Build a HashMap where value is a set of name
+        Map<Integer, Set<String>> map = students.stream()
+                .collect(
+                        Collectors.groupingBy(
+                                Student::getAge, 
+                                Collectors.mapping(
+                                        Student::getName, 
+                                        Collectors.toSet())));
+        assertEquals(3, map.size());
+        assertEquals(2, map.get(18).size());
+        assertEquals(1, map.get(20).size());
+        assertEquals(1, map.get(21).size());
+    }
 	
 	public class Student {
 	    private Long id;
 	    private String name;
+	    private int age;
 	    
-	    public Student(Long id, String name) {
+	    public Student(Long id, String name, int age) {
 	        this.id = id;
 	        this.name = name;
+	        this.age = age;
 	    }
 	    
         public Long getId() {
@@ -138,6 +174,14 @@ public class StreamTest {
         }
         public void setName(String name) {
             this.name = name;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
         }
 	    
 	}
