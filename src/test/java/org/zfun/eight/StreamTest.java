@@ -17,6 +17,11 @@ public class StreamTest {
 
 	@Test
     public void testStream() {
+	    List<String> empty = Arrays.asList();
+	    // match.  Stream works well with an empty list
+	    assertFalse(empty.stream()
+	            .anyMatch((s) -> s.equals("aaa")));
+	    
 		List<String> names = Arrays.asList("ddd2","aaa2","bbb1","aaa1","bbb3","ccc","bbb2","ddd1");
 		// filter and collect
 		List<String> names1 = names.stream()
