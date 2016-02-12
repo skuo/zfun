@@ -81,7 +81,12 @@ public class StreamTest {
 	    for (int i = 0; i < 10; i++) {
 	        map.putIfAbsent(i, "val" + i);
 	    }
-	    //
+	    // compute will create a new entry if the key does not exist
+	    map.compute(99, (k,v) -> v == null ? k.toString() : k+v);
+        assertEquals("99",map.get(99));
+        map.compute(99, (k,v) -> v == null ? k.toString() : k+v);
+        assertEquals("9999",map.get(99));
+        //
 	    map.computeIfPresent(3, (k,v) -> v + k);
 	    assertEquals("val33",map.get(3));
 	    map.computeIfPresent(9, (k,v) -> null);
