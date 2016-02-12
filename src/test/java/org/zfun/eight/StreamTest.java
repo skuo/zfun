@@ -88,6 +88,8 @@ public class StreamTest {
 	    assertFalse(map.containsKey(9));
 	    map.computeIfAbsent(23, (k) -> "val" + k);
 	    assertEquals("val23",map.get(23));
+        map.computeIfAbsent(24, (k) -> "val24");
+        assertEquals("val24",map.get(24));
 	    map.merge(9, "val9", (value, newValue) -> value.concat(newValue));
 	    assertEquals("val9", map.get(9));
 	    map.merge(9, "concat", (value, newValue) -> value.concat(newValue));
