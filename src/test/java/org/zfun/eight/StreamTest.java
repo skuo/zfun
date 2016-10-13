@@ -72,10 +72,10 @@ public class StreamTest {
                 .sum()
                 );
         // join
-        assertEquals("\"ddd2\",\"aaa2\",\"bbb1\",\"aaa1\",\"bbb3\",\"ccc\",\"bbb2\",\"ddd1\"",
+        assertEquals("[\"ddd2\",\"aaa2\",\"bbb1\",\"aaa1\",\"bbb3\",\"ccc\",\"bbb2\",\"ddd1\"]",
                 names.stream()
                 .map(s -> "\"" + s + "\"")
-                .collect(Collectors.joining(","))
+                .collect(Collectors.joining(",","[","]"))
                 );
         
 		// the original names list is untouched
