@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.LongAccumulator;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -122,8 +123,12 @@ public class SpiderTest {
 	public void testFunction() {
 		Function<String, Integer> toInteger = Integer::valueOf;
 		Function<String, String> backToString = toInteger.andThen(String::valueOf);
+		BiFunction<String, String, String> strConcat = (x, y) -> {
+		    return x+y;
+		};
 
 		assertEquals("123",backToString.apply("123"));     // "123"
+		assertEquals("BinaryFunction", strConcat.apply("Binary", "Function"));
 	}
 	
 	/*
