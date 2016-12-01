@@ -12,11 +12,28 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
+import java.util.stream.Stream;
 import org.junit.Test;
 
 public class StreamTest {
-
+    
+    public static boolean isOdd(long number) {
+        if (number % 2 == 0) {
+          return false;
+        }
+        return true;
+      }
+    
+    @Test
+    public void testStreamIterate () {
+        List<Long> longs = Stream.iterate(2L, n  ->  n  + 1)
+        .filter(StreamTest::isOdd)
+        .skip(100)
+        .limit(5)
+        .collect(Collectors.toList());
+        assertEquals(Arrays.asList(203L, 205L, 207L, 209L, 211L), longs);
+    }
+    
 	@Test
     public void testStream() {
 	    List<String> empty = Arrays.asList();
