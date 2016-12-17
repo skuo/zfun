@@ -46,25 +46,25 @@ public class AddTwoNumbers {
         //
         ListNode l1 = null;
         ListNode l1Tail = null;
-        ListNode l1Node = new ListNode(2);
+        ListNode l1Node = s.new ListNode(2);
         l1 = l1Node;
         l1Tail = l1Node;
-        l1Node = new ListNode(4);
+        l1Node = s.new ListNode(4);
         l1Tail.next = l1Node;
         l1Tail = l1Node;
-        l1Node = new ListNode(3);
+        l1Node = s.new ListNode(3);
         l1Tail.next = l1Node;
         l1Tail = l1Node;
         //
         ListNode l2 = null;
         ListNode l2Tail = null;
-        ListNode l2Node = new ListNode(5);
+        ListNode l2Node = s.new ListNode(5);
         l2 = l2Node;
         l2Tail = l2Node;
-        l2Node = new ListNode(6);
+        l2Node = s.new ListNode(6);
         l2Tail.next = l2Node;
         l2Tail = l2Node;
-        l2Node = new ListNode(4);
+        l2Node = s.new ListNode(4);
         l2Tail.next = l2Node;
         l2Tail = l2Node;
         //
@@ -74,4 +74,14 @@ public class AddTwoNumbers {
             listNode = listNode.next;
         }
     }
+    
+    public class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
+            val = x;
+        }
+    }
+
 }
