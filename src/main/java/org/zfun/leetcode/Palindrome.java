@@ -55,6 +55,10 @@ public class Palindrome {
     }
     
     public static void main(String[] args) {
+        // my algorith is (n squre) or (n cube)
+        // Manacher algorith is (n)
+        // http://articles.leetcode.com/longest-palindromic-substring-part-ii
+        
         Palindrome obj = new Palindrome();
         String str = "babad";
         String lp = obj.longestPalindrome(str);
