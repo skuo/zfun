@@ -1,13 +1,18 @@
 package org.zfun.eight;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 
 public class CompletableFutureTest {
+    private Random random = new Random();
 
-    @Test
+    //@Test
     public void testCompletableFuture() throws InterruptedException, ExecutionException {
         CompletableFuture<Integer> futureCount = CompletableFuture.supplyAsync(() -> {
             try {
@@ -34,16 +39,6 @@ public class CompletableFutureTest {
             System.out.println("ERROR: LongTaskRunnable is not done");
     }
     
-    public int longRunningTask(int num) {
-        try {
-            // simulate long running task
-            Thread.sleep(5000); // 5000 ms
-        } catch (InterruptedException ie) {
-            ;
-        }
-        return num;
-    }
-    
     private class LongTaskRunnable implements Runnable {
         private int count;
         private int waitInMs; // wait time in milliseconds
@@ -62,5 +57,36 @@ public class CompletableFutureTest {
             }
             System.out.println("LongTaskRunnable count=" + count);
         }
+    }
+    
+    @Test
+    public void testSites() throws InterruptedException, ExecutionException {
+        System.out.println("in testSites()");
+        List<String> sites = Arrays.asList("site1", "site2", "site3", "site4");
+        List<CompletableFuture<String>> completableFutures = sites.stream()
+                .map(site -> CompletableFuture.supplyAsync(() -> downloadSite(site,5000)))
+                .collect(Collectors.<CompletableFuture<String>>toList());
+        CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[completableFutures.size()])).join();
+        // loop through all completableFutures
+        for (CompletableFuture<String> cf : completableFutures) {
+            if (cf.isDone()) {
+                System.out.println("[Success] " + cf.get());
+            } else {
+                System.out.println("[ERROR] is not done");
+            }
+        }
+    }
+    
+    private String downloadSite(final String site, int waitInMsMax) {
+        int randomInt = random.nextInt((waitInMsMax-1)+1)+1;
+        String res = site + ": waited " + randomInt + "(ms)";
+        try {
+            // simulate long running task
+            Thread.sleep(randomInt); 
+        } catch (InterruptedException ie) {
+            ;
+        }
+        System.out.println(res);
+        return res;
     }
 }
