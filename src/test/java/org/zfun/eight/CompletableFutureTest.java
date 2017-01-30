@@ -19,10 +19,19 @@ public class CompletableFutureTest {
         CompletableFuture<Void> cf2 = CompletableFuture.runAsync(new LongTaskRunnable(3,3000));
         // Doing something else
         System.out.println("Print this statement while waiting for CompletableFuture");
-        int count = (int) futureCount.get();
-        System.out.println(count);
+        // wait until CompletableFutures complete
+        CompletableFuture.allOf(futureCount, cf2).join();
+        // All CompletableFutures should be done at this point
+        if (futureCount.isDone()) {
+            int count = (int) futureCount.get();
+            System.out.println("Success: futureCount, count=" + count);
+        } else {
+            System.out.println("ERROR: futureCount is not done");
+        }
         if (cf2.isDone())
-            System.out.println("LongTaskRunnable is done");
+            System.out.println("Success: LongTaskRunnable is done");
+        else 
+            System.out.println("ERROR: LongTaskRunnable is not done");
     }
     
     public int longRunningTask(int num) {
