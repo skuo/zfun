@@ -132,6 +132,18 @@ public class StreamTest {
           } 
           );
         assertEquals("lambda", map.get(9));
+
+        // test stream and joining
+        assertEquals("?0=val0&1=val1&2=val2&99=9999&3=val33&4=val4&5=val5&6=val6&7=val7&8=val8&9=lambda&23=val23&24=val24",
+                map.entrySet().stream()
+                .map((entry) -> entry.getKey() + "=" + entry.getValue())
+                .collect(Collectors.joining("&","?","")));
+
+        // test stream and joining on an empty map. prefix and subfix are always added
+        assertEquals("?",
+                (new HashMap<String,String>()).entrySet().stream()
+                .map((entry) -> entry.getKey() + "=" + entry.getValue())
+                .collect(Collectors.joining("&","?","")));
 	}
 	
 	@Test
