@@ -1,4 +1,5 @@
 package org.zfun.hive;
+
 import org.apache.hadoop.hive.ql.exec.UDF;
 import org.apache.hadoop.io.Text;
 

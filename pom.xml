@@ -69,32 +69,36 @@
 			<artifactId>commons-jexl</artifactId>
 			<version>2.1.1</version>
 		</dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
         <!-- BEGIN hstack -->
-        <!-- 
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-core</artifactId>
-            <version>0.20.2-cdh3u0</version>
+            <version>1.2.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.hadoop.hive</groupId>
+            <groupId>org.apache.hive</groupId>
             <artifactId>hive-exec</artifactId>
-            <version>0.7.0-cdh3u0</version>
+            <version>1.2.1</version>
             <scope>provided</scope>
         </dependency>
-        -->
-        <!-- 
         <dependency> 
-        	<groupId>tokyocabinet</groupId> 
-            <artifactId>tokyocabinet_java</artifactId> <version>1.23</version> 
+        	<groupId>com.cloudhopper</groupId> 
+            <artifactId>ch-tokyocabinet-java</artifactId> 
+            <version>1.24.0</version> 
         </dependency> 
+        <!--  
         <dependency> 
         	<groupId>tokyotyrant</groupId> 
         	<artifactId>tokyotyrant</artifactId> 
         	<version>0.11.1</version> 
-        </dependency> 
-        -->
+        </dependency>
+        --> 
         <!-- END hstack -->
         <!-- START hstack -->
         <dependency>
@@ -152,9 +156,6 @@
             <artifactId>spring-tx</artifactId>
             <version>3.1.0.M2</version>
         </dependency>
-        <!-- <dependency> <groupId>tokyocabinet</groupId> <artifactId>tokyocabinet_java</artifactId> <version>1.23</version> 
-            </dependency> <dependency> <groupId>tokyotyrant</groupId> <artifactId>tokyotyrant</artifactId> <version>0.11.1</version> 
-            </dependency> -->
         <!-- BEGIN memcache and membase -->
         <dependency>
             <groupId>couchbase</groupId>
@@ -310,10 +311,17 @@
         </repository>
         <repository>
             <id>cloudera</id>
-            <url>https://repository.cloudera.com/content/repositories/releases/</url>
+            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
         </repository>
-        <!-- <repository> <id>tokyotyrant-java</id> <url>http://tokyotyrant-java.googlecode.com/svn/maven/repository</url> 
-            <snapshots> <enabled>false</enabled> </snapshots> </repository> -->
+        <!-- 
+        <repository> 
+            <id>tokyotyrant-java</id> 
+            <url>http://tokyotyrant-java.googlecode.com/svn/maven/repository</url> 
+            <snapshots> 
+                <enabled>false</enabled> 
+            </snapshots>
+        </repository> 
+        -->
         <repository>
             <snapshots>
                 <enabled>false</enabled>
