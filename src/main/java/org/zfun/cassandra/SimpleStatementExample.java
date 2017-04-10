@@ -9,8 +9,8 @@ import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.SimpleStatement;
 
+// https://github.com/jeffreyscarpenter/cassandra-guide/blob/master/cassandra-tdg/src/com/cassandraguide/clients/QueryBuilderExample.java
 public class SimpleStatementExample {
-
 
     public static void main(String[] args) {
         
