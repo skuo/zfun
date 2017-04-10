@@ -1,5 +1,9 @@
 package org.zfun.cassandra;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.mapping.Mapper;
@@ -21,7 +25,8 @@ public class ObjectMapperExample {
         String hotelId = "AZ123";
         // save a new hotel
         Address addr = new Address("7712 E. Broadway Blvd","Glendale", "CA", "92310", "US");
-        Hotel hotel = new Hotel(hotelId, addr, "1-888-999-9999", "Super Hotel at WestWolrd", null);
+        Set<String> pois = new HashSet(Arrays.asList("Universal Studios", "Knott's Berry Farm", "Disneyland"));
+        Hotel hotel = new Hotel(hotelId, addr, "1-888-999-9999", "Super Hotel at WestWolrd", pois);
         hotelMapper.save(hotel);
         
         // retrieve from db
