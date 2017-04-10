@@ -26,6 +26,11 @@
             <artifactId>mapstruct</artifactId>
             <version>${org.mapstruct.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.datastax.cassandra</groupId>
+            <artifactId>cassandra-driver-core</artifactId>
+            <version>3.2.0</version>
+        </dependency>
         <!--         
         <dependency>
             <groupId>com.atti.ypad.clients</groupId>
@@ -114,7 +119,7 @@
         </dependency>
         --> 
         <!-- END hstack -->
-        <!-- START hstack -->
+        <!-- START springframework -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
