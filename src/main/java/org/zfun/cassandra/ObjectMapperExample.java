@@ -25,7 +25,7 @@ public class ObjectMapperExample {
         String hotelId = "AZ123";
         // save a new hotel
         Address addr = new Address("7712 E. Broadway Blvd","Glendale", "CA", "92310", "US");
-        Set<String> pois = new HashSet(Arrays.asList("Universal Studios", "Knott's Berry Farm", "Disneyland"));
+        Set<String> pois = new HashSet<>(Arrays.asList("Universal Studios", "Knott's Berry Farm", "Disneyland"));
         Hotel hotel = new Hotel(hotelId, addr, "1-888-999-9999", "Super Hotel at WestWolrd", pois);
         hotelMapper.save(hotel);
         
