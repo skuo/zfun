@@ -86,19 +86,19 @@ public class BoardSearch {
         board[0][0] = 'Y';
         board[0][1] = 'T';
         board[0][2] = 'A';
-        board[0][3] = 'N';
+        board[0][3] = 'K';
         board[1][0] = 'S';
         board[1][1] = 'T';
         board[1][2] = 'E';
-        board[1][3] = 'A';
+        board[1][3] = 'E';
         board[2][0] = 'C';
         board[2][1] = 'L';
         board[2][2] = 'S';
-        board[2][3] = 'E';
+        board[2][3] = 'A';
         board[3][0] = 'X';
         board[3][1] = 'E';
         board[3][2] = 'L';
-        board[3][3] = 'F';
+        board[3][3] = 'N';
         
         BoardSearch obj = new BoardSearch();
         
