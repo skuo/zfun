@@ -1,8 +1,10 @@
 package org.zfun.leetcode;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
 import lombok.AllArgsConstructor;
@@ -10,7 +12,7 @@ import lombok.Data;
 
 public class BoardSearch {
 
-    public boolean findString(char[][] board, String searchStr) {
+    public boolean searchStringDfs(char[][] board, String searchStr) {
         boolean found = false;
         
         // check for bad inputs
@@ -33,14 +35,18 @@ public class BoardSearch {
             path.add(coord);
             found = findStringDfs(coord, path, board, searchStr, index+1);
             if (found) {
-                for (Coord c : path) 
-                    System.out.println(c.toString() + " " + board[c.getI()][c.getJ()]);
-                System.out.println();
+                printPath(board, path);
                 break;
             }
         }
         
         return found;
+    }
+
+    private void printPath(char[][] board, List<Coord> path) {
+        for (Coord c : path) 
+            System.out.println(c.toString() + " " + board[c.getI()][c.getJ()]);
+        System.out.println();
     }
     
     private boolean findStringDfs(Coord coord, List<Coord> path, char[][] board, String searchStr, int index) {
@@ -80,6 +86,60 @@ public class BoardSearch {
         return neighbors;
     }
     
+    public boolean searchStringBfs(char[][] board, String searchStr) {
+        boolean found = false;
+        
+        // check for bad inputs
+        if (searchStr == null || searchStr.length() == 0 || searchStr.length() > 16)
+            return false;
+        
+        // find the starting coords
+        int index = 0;
+        Queue<List<Coord>> pathQueue = new LinkedList<>();
+        for (int i = 0; i< 4; i++)
+            for (int j=0; j<4; j++)
+                if (board[i][j] == searchStr.charAt(index)) {
+                    List<Coord> path = new LinkedList<>(Arrays.asList(new Coord(i,j)));
+                    pathQueue.offer(path);
+                }
+        if (pathQueue.size() == 0)
+            return false;
+        
+        // bfs        
+        while (pathQueue.peek() != null) {
+            // set up path, level and lastCoord
+            List<Coord> path = pathQueue.poll();
+            int level = path.size()-1;
+            Coord lastCoord = path.get(level);
+            // check the neighbors, which are really the children
+            List<Coord> neighbors = findNeighbors(lastCoord);
+            char searchC = searchStr.charAt(level+1);
+            for (Coord c : neighbors) {
+                char boardC = board[c.getI()][c.getJ()];
+                if (!path.contains(c) && 
+                        boardC == searchC) {
+                    // found the next char
+                    List<Coord> newPath = new LinkedList<>(path);
+                    newPath.add(c);
+                    // is the char the last one
+                    if (newPath.size() == searchStr.length()) {
+                        found = true;
+                        path = newPath;
+                        break;
+                    }
+                    // put the new path in the queue
+                    pathQueue.offer(newPath);
+                }
+            }
+            if (found) {
+                printPath(board, path);
+                break;
+            }
+        }
+        
+        return found;
+    }
+    
     public static void main(String[] args) {
         char[][] board = new char[4][4];
         // configure
@@ -102,18 +162,32 @@ public class BoardSearch {
         
         BoardSearch obj = new BoardSearch();
         
+        // DFS
         String searchStr = "SEATTLE";
-        boolean found = obj.findString(board, searchStr);
+        boolean found = obj.searchStringDfs(board, searchStr);
         System.out.println(searchStr + " in board=" + found + "\n");
         
         searchStr = "SEAN";
-        found = obj.findString(board, searchStr);
+        found = obj.searchStringDfs(board, searchStr);
         System.out.println(searchStr + " in board=" + found + "\n");
 
         searchStr = "SMILE";
-        found = obj.findString(board, searchStr);
+        found = obj.searchStringDfs(board, searchStr);
         System.out.println(searchStr + " in board=" + found + "\n");
-    }
+
+        // BFS
+        searchStr = "SEATTLE";
+        found = obj.searchStringBfs(board, searchStr);
+        System.out.println("BFS " + searchStr + " in board=" + found + "\n");
+
+        searchStr = "SEAN";
+        found = obj.searchStringBfs(board, searchStr);
+        System.out.println("BFS " + searchStr + " in board=" + found + "\n");
+
+        searchStr = "SMILE";
+        found = obj.searchStringBfs(board, searchStr);
+        System.out.println("BFS " + searchStr + " in board=" + found + "\n");
+}
     
     @Data
     @AllArgsConstructor
