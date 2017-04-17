@@ -194,6 +194,18 @@ public class BoardSearch {
     private class Coord {
         Integer i;
         Integer j;
-        
+
+        /* This is just to show how Eclipse generate a hashdoce.  It is based on using
+         * a prime number=31 and result=1
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + getOuterType().hashCode();
+            result = prime * result + ((i == null) ? 0 : i.hashCode());
+            result = prime * result + ((j == null) ? 0 : j.hashCode());
+            return result;
+        }
+        */
     }
 }
