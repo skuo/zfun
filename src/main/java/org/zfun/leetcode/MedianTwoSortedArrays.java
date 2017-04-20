@@ -28,13 +28,9 @@ public class MedianTwoSortedArrays {
         while (idx1 < len1 && idx2 < len2) {
             count++; 
             if (nums1[idx1] <= nums2[idx2]) {
-                if (medIndexes.contains(count))
-                    medians.add(nums1[idx1]);
-                idx1++;
+                idx1 = setMedians(nums1, medIndexes, medians, count, idx1);
             } else {
-                if (medIndexes.contains(count))
-                    medians.add(nums2[idx2]);
-                idx2++;
+                idx2 = setMedians(nums2, medIndexes, medians, count, idx2);
             }
             // break if all medians are found
             if (medIndexes.size() == medians.size())
@@ -46,16 +42,12 @@ public class MedianTwoSortedArrays {
             // nums1 
             while(idx1 < len1) {
                 count++;
-                if (medIndexes.contains(count))
-                    medians.add(nums1[idx1]);
-                idx1++;
+                idx1 = setMedians(nums1, medIndexes, medians, count, idx1);
             }
             // nums2
             while(idx2 < len2) {
                 count++;
-                if (medIndexes.contains(count))
-                    medians.add(nums2[idx2]);
-                idx2++;
+                idx2 = setMedians(nums2, medIndexes, medians, count, idx2);
             }
         }
         
@@ -65,6 +57,12 @@ public class MedianTwoSortedArrays {
             sum += i;
         median = (1.0) * sum / medians.size();
         return median;
+    }
+
+    private int setMedians(int[] nums, List<Integer> medIndexes, List<Integer> medians, int count, int idx) {
+        if (medIndexes.contains(count))
+            medians.add(nums[idx]);
+        return ++idx;
     }
     
     public static void main(String[] args) {
