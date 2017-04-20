@@ -29,9 +29,9 @@ public class AB {
         if (k > maxScore)
             return null;
         
-        // initialize all chars to 'X'
+        // initialize all chars to 'B'
         for (int i=0; i<n; i++)
-            chars[i] = 'X';
+            chars[i] = 'B';
         
         // this is basically binary search starting at char[n-1]
         chars[n-1] = 'B';
@@ -94,6 +94,12 @@ public class AB {
         k = 0;
         str = obj.createString(n, k);
         System.out.println(String.format("str=%s, n=%d, k=%d", str, n, k));
+
+        n = 5;
+        k = 2;
+        str = obj.createString(n, k);
+        System.out.println(String.format("str=%s, n=%d, k=%d", str, n, k));
+
 
         n = 5;
         k = 8;
