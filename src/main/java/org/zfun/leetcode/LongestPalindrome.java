@@ -1,6 +1,6 @@
 package org.zfun.leetcode;
 
-public class Palindrome {
+public class LongestPalindrome {
 
     public String longestPalindrome(String s) {
         String longestPalidrome = "";
@@ -59,7 +59,7 @@ public class Palindrome {
         // Manacher algorith is (n)
         // http://articles.leetcode.com/longest-palindromic-substring-part-ii
         
-        Palindrome obj = new Palindrome();
+        LongestPalindrome obj = new LongestPalindrome();
         String str = "babad";
         String lp = obj.longestPalindrome(str);
         System.out.println("Longest palindrome for " + str + "=" + lp);
