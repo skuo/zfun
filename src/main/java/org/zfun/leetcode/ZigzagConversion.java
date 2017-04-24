@@ -17,17 +17,16 @@ public class ZigzagConversion {
             zzCoords.add(new ZzCoord(coord, s.charAt(i), i));
         }
         
-        List<ZzCoord> sortedZzCoords = zzCoords.stream()
-                .sorted( (coord1, coord2) -> {
+        zzCoords.sort(
+                (coord1, coord2) -> {
                     if (coord1.getCoord().getX() == coord2.getCoord().getX())
                         return coord1.getCoord().getY() - coord2.getCoord().getY();
                     else
                         return coord1.getCoord().getX() - coord2.getCoord().getX();
-                })
-                .collect(Collectors.toList());
+                });
         
         StringBuilder sb = new StringBuilder();
-        for (ZzCoord zzCoord : sortedZzCoords)
+        for (ZzCoord zzCoord : zzCoords)
             sb.append(zzCoord.getC());
             
         return sb.toString();
