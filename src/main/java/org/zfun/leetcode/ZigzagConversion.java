@@ -2,7 +2,6 @@ package org.zfun.leetcode;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ZigzagConversion {
 
@@ -109,6 +108,26 @@ public class ZigzagConversion {
         convertedStr = obj.convert(str, 4);
         System.out.println("str=" + str + ", convertedStr=" + convertedStr);
         assert(convertedStr.equals("ABCED"));
+        
+        List<List<Character>> chars = new LinkedList<>();
+        // need to initialize the list
+        chars.add(new LinkedList<Character>());
+        chars.add(new LinkedList<Character>());
+        chars.add(new LinkedList<Character>());
+        chars.add(new LinkedList<Character>());
+        // set char in the list of LinkedList
+        chars.get(0).add('A');
+        chars.get(1).add('B');
+        chars.get(2).add('C');
+        chars.get(3).add('D');
+        chars.get(2).add('E');
+        
+        StringBuilder sb = new StringBuilder();
+        for (List<Character> charList : chars) {
+            for (Character c : charList)
+                sb.append(c);
+        }
+        System.out.println(sb.toString());
 
     }
     
