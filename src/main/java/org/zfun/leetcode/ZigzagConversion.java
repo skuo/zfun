@@ -1,52 +1,59 @@
 package org.zfun.leetcode;
 
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 public class ZigzagConversion {
 
     public String convert(String s, int numRows) {
-        // determine the column of the two dimensional arrays
         int len = s.length();
-        int quotient = len / (numRows + 1);
-        int remainder = s.length() % (numRows + 1);
-        int remainderColumns = (remainder == 0) ? 0 : 1;
-        int numColumns = 2*quotient + remainderColumns;
-        char[][] twoDChars = new char[numRows][numColumns];
-
-        // is numRows is even, then there is no medianRow (= -1)
-        boolean isEven = (numRows % 2 == 0) ? true : false;
-        int medianRow = -1;
-        if (!isEven)
-            medianRow = (numRows-1)/2;
+        int numZzCols = numRows - 2;
+        int zzBlockSize = numRows + numZzCols;
         
-        // loop through the chars in s and assign them to array
-        int row = 0, col = 0;
-        for (int i=0; i<len; i++) {
-            if (row < numRows) {
-                twoDChars[row][col] = s.charAt(i);
-                row++;
-            } else {
-                // determine whether to add the median row
-                col++;
-                if (medianRow == -1) {
-                    row = 0;
-                    twoDChars[row][col] = s.charAt(i);
-                    row++;
-                } else {
-                    twoDChars[medianRow][col] = s.charAt(i);
-                    row = 0;
-                    col++;
-                }
-            }
+        List<ZzCoord> zzCoords = new LinkedList<>();
+        for (int i=0; i< len; i++) {
+            Coord coord = calcCoord(i, numRows, numZzCols, zzBlockSize);
+            zzCoords.add(new ZzCoord(coord, s.charAt(i), i));
         }
         
-        // all right, read out the converted columns
-        StringBuilder sb = new StringBuilder();
-        for (int i=0; i<numRows; i++)
-            for (int j=0; j<numColumns; j++) {
-                if (twoDChars[i][j] != '\u0000')
-                    sb.append(twoDChars[i][j]);
-            }
+        List<ZzCoord> sortedZzCoords = zzCoords.stream()
+                .sorted( (coord1, coord2) -> {
+                    if (coord1.getCoord().getX() == coord2.getCoord().getX())
+                        return coord1.getCoord().getY() - coord2.getCoord().getY();
+                    else
+                        return coord1.getCoord().getX() - coord2.getCoord().getX();
+                })
+                .collect(Collectors.toList());
         
+        StringBuilder sb = new StringBuilder();
+        for (ZzCoord zzCoord : sortedZzCoords)
+            sb.append(zzCoord.getC());
+            
         return sb.toString();
+    }
+    
+    private Coord calcCoord(int i, int numRows, int numZzCols, int zzBlockSize) {
+        int quotient = i/zzBlockSize;
+        int remainder = i % zzBlockSize;
+        
+        // calculate y
+        int remainderCols = 0;
+        if (remainder >= numRows)
+            remainderCols += (remainder - numRows + 1);
+        int y = quotient * (1+numZzCols) + remainderCols;
+        
+        // calculate x
+        int x = remainder;
+        if (remainder >= numRows)
+            x = (numRows-1) - (remainder - numRows + 1);
+        
+        return new Coord(x,y);
     }
     
     public static void main(String[] args) {
@@ -55,15 +62,37 @@ public class ZigzagConversion {
         String convertedStr = obj.convert(str, 3);
         //str=PAYPALISHIRING, convertedStr=PAHNAPLSIIGYIR
         System.out.println("str=" + str + ", convertedStr=" + convertedStr);
-
+        assert(convertedStr.equals("PAHNAPLSIIGYIR"));
+        
         str = "ABC";
         convertedStr = obj.convert(str, 2);
-        // str=ABC, convertedStr=ACB
         System.out.println("str=" + str + ", convertedStr=" + convertedStr);
+        assert(convertedStr.equals("ACB"));
 
         str = "ABCD";
         convertedStr = obj.convert(str, 2);
-        //str=ABCD, convertedStr=ACBD
         System.out.println("str=" + str + ", convertedStr=" + convertedStr);
+        assert(convertedStr.equals("ACBD"));
+
+        str = "ABCDE";
+        convertedStr = obj.convert(str, 4);
+        System.out.println("str=" + str + ", convertedStr=" + convertedStr);
+        assert(convertedStr.equals("ABCED"));
+
+    }
+    
+    @Data
+    @AllArgsConstructor
+    private class ZzCoord {
+        Coord coord;
+        char c;
+        int index;
+    }
+    
+    @Data
+    @AllArgsConstructor
+    private class Coord {
+        int x;
+        int y;
     }
 }
