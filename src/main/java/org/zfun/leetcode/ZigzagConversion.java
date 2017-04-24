@@ -1,19 +1,14 @@
 package org.zfun.leetcode;
 
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
 public class ZigzagConversion {
 
     public String convert(String s, int numRows) {
         int len = s.length();
-        int numZzCols = numRows - 2;
+        int numZzCols = Math.max(0, numRows - 2);
         int zzBlockSize = numRows + numZzCols;
         
         List<ZzCoord> zzCoords = new LinkedList<>();
@@ -56,6 +51,38 @@ public class ZigzagConversion {
         return new Coord(x,y);
     }
     
+    //@Data
+    //@AllArgsConstructor
+    private class ZzCoord {
+        Coord coord;
+        char c;
+        int index;
+        
+        public Coord getCoord() { return coord; }
+        public char getC() { return c; }
+        
+        public ZzCoord(Coord coord, char c, int index) {
+            this.coord = coord;
+            this.c = c;
+            this.index = index;
+        }
+    }
+    
+    //@Data
+    //@AllArgsConstructor
+    private class Coord {
+        int x;
+        int y;
+        
+        public int getX() { return x; }
+        public int getY() { return y; }
+        
+        public Coord(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
     public static void main(String[] args) {
         ZigzagConversion obj = new ZigzagConversion();
         String str = "PAYPALISHIRING";
@@ -64,6 +91,11 @@ public class ZigzagConversion {
         System.out.println("str=" + str + ", convertedStr=" + convertedStr);
         assert(convertedStr.equals("PAHNAPLSIIGYIR"));
         
+        str = "A";
+        convertedStr = obj.convert(str, 1);
+        System.out.println("str=" + str + ", convertedStr=" + convertedStr);
+        assert(convertedStr.equals("A"));
+
         str = "ABC";
         convertedStr = obj.convert(str, 2);
         System.out.println("str=" + str + ", convertedStr=" + convertedStr);
@@ -81,18 +113,4 @@ public class ZigzagConversion {
 
     }
     
-    @Data
-    @AllArgsConstructor
-    private class ZzCoord {
-        Coord coord;
-        char c;
-        int index;
-    }
-    
-    @Data
-    @AllArgsConstructor
-    private class Coord {
-        int x;
-        int y;
-    }
 }
