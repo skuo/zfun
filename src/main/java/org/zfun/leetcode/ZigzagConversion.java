@@ -54,6 +54,7 @@ public class ZigzagConversion {
     private class ZzCoord {
         Coord coord;
         char c;
+        @SuppressWarnings("unused")
         int index;
         
         public Coord getCoord() { return coord; }
