@@ -43,6 +43,8 @@ public class OpenCSVReaderTest {
                     clicks, customer, ypid);
         }
         System.out.println("End of File");
+        if (reader != null)
+            reader.close();
     }
 
     @Test
@@ -76,6 +78,8 @@ public class OpenCSVReaderTest {
             data.add(String.format("[%d] partner=%s, impressions=%d, clicks=%d, customer=%s, ypid=%s,\n", lineRead, partner, impressions,
                     clicks, customer, ypid));
         }
+        if (reader != null)
+            reader.close();
         return data;
     }
 
@@ -102,6 +106,8 @@ public class OpenCSVReaderTest {
             data.add(String.format("[%d] partner=%s, impressions=%d, clicks=%d, customer=%s, ypid=%s,\n", lineRead, partner, impressions,
                     clicks, customer, ypid));
         }
+        if (reader != null)
+            reader.close();
         return data;
     }
 }

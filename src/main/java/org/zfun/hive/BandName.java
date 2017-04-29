@@ -7,6 +7,7 @@ import org.apache.hadoop.io.Text;
  * Date: Aug 29, 2011
  */
 public class BandName extends UDF {
+    
     private final Text BAND_0_50 = new Text("0_50");
     private final Text BAND_51_100 = new Text("51_100");
     private final Text BAND_101_200 = new Text("101_200");

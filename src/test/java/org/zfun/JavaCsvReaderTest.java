@@ -82,6 +82,8 @@ public class JavaCsvReaderTest {
             data.add(String.format("[%d] partner=%s, impressions=%d, clicks=%d, customer=%s, ypid=%s,\n", lineRead,
                     partner, impressions, clicks, customer, ypid));
         }
+        if (reader != null)
+            reader.close();
         return data;
     }
 
