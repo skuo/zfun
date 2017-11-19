@@ -33,8 +33,8 @@ public class ValidParentheses {
             }
         }
         
-        // If isValid == true and the stack is empty, the isValid remains true
-        if (!isValid || !parens.isEmpty())
+        // If stack is not empty, set isValid to false
+        if (!parens.isEmpty())
             isValid = false;
         
         return isValid;
