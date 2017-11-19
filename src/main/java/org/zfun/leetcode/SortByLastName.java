@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class SortByLastName {
 
-    // Print out the name sorted by lastName, which is the second word without deuplicates
+    // Print out the name sorted by lastName, which is the second word without duplicates
     public static void main(String[] args) {
         List<String> names = new LinkedList<>(Arrays.asList("Jonathan Smith", "Bill O'Reilly", "Thomas Sowell Sr.",
                 "Jonathan Smith", "Rose Friedmann"));
