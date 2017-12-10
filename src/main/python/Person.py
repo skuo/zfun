@@ -26,6 +26,7 @@ def updatePerson(person):
 
 #=====================================================================                
 # class Date 
+# method, classmethod, static method
 #=====================================================================   
 class Date:
     
@@ -50,6 +51,67 @@ class Date:
     
             
 #=====================================================================                
+# Multiple inheritance
+''' 
+Assuming everything descends from object (you are on your own if it doesn't), Python computes a 
+method resolution order (MRO) based on your class inheritance tree. The MRO satisfies 3 properties:
+
+Children of a class come before their parents
+Left parents come before right parents
+A class only appears once in the MRO
+If no such ordering exists, Python errors. The inner workings of this is a C3 Linerization of the classes ancestry. 
+Read all about it here: https://www.python.org/download/releases/2.3/mro/
+
+Thus, in both of the examples below, it is:
+
+Child
+Left
+Right
+Parent
+When a method is called, the first occurrence of that method in the MRO is the one that is called. Any class that doesn't implement that method is skipped. Any call to super within that method will call the next occurrence of that method in the MRO. Consequently, it matters both what order you place classes in inheritance, and where you put the calls to super in the methods.
+'''
+#=====================================================================   
+class Parent0 (object):
+    def __init__(self):
+        super(Parent0, self).__init__()
+        print "parent0"
+
+class Left0(Parent0):
+    def __init__(self):
+        super(Left0, self).__init__()
+        print "left0"
+
+class Right0(Parent0):
+    def __init__(self):
+        super(Right0, self).__init__()
+        print "right0"
+
+class Child0(Left0, Right0):
+    def __init__(self):
+        super(Child0, self).__init__()
+        print "child0"
+
+class Parent1 (object):
+    def __init__(self):
+        print "parent1"
+        super(Parent1, self).__init__()
+
+class Left1(Parent1):
+    def __init__(self):
+        print "left1"
+        super(Left1, self).__init__()
+
+class Right1(Parent1):
+    def __init__(self):
+        print "right1"
+        super(Right1, self).__init__()
+
+class Child1(Left1, Right1):
+    def __init__(self):
+        print "child1"
+        super(Child1, self).__init__()
+
+#=====================================================================                
 # main 
 #=====================================================================   
         
@@ -72,3 +134,9 @@ date2 = Date.from_string('11-09-2012')
 print date2
 is_date = Date.is_date_valid('11-09-2012')
 print is_date
+
+print "\nsuper() first"
+child0 = Child0()
+
+print "\nsuper() last"
+child1 = Child1()
