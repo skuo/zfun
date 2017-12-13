@@ -25,9 +25,10 @@ public class SortByLastName {
         // print
         System.out.println(sortedNames.stream()
             .map(Object::toString)
-            .collect(Collectors.joining(",","[","]"))
+            .collect(Collectors.joining(",", "[", "]"))
             )
         ;
         
     }
 }
+
