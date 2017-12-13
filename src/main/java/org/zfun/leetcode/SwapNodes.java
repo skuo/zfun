@@ -85,7 +85,9 @@ public class SwapNodes {
             intList.add(curr.val);
             curr = curr.next;
         }
-        System.out.println(intList.stream().map(Object::toString).collect(Collectors.joining(",", "[", "]")));
+        System.out.println(intList.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(",", "[", "]")));
     }
 
     public static void main(String[] args) {
