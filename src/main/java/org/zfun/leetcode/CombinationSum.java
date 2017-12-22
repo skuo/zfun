@@ -38,7 +38,7 @@ public class CombinationSum {
         // Make sure eligibleCandidates are not empty
         if (eligibleCandidates.size() == 0)
             return combSumList;
-        // sort condidates desc
+        // sort condidates
         Collections.sort(eligibleCandidates);
 
         // do depth first search
