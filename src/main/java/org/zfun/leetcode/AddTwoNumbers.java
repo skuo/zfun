@@ -14,7 +14,7 @@ Explanation: 342 + 465 = 807.
  */
 public class AddTwoNumbers {
     // 1560 / 1562 test cases passed.
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
         // reconstitute num1
         long num1 = 0;
         long multiplicant = 1;
@@ -23,8 +23,7 @@ public class AddTwoNumbers {
             num1 = num1 + curr.val * multiplicant;
             curr = curr.next;
             multiplicant *= 10;
-        }
-        ;
+        };
         // reconstitute num2
         long num2 = 0;
         multiplicant = 1;
@@ -33,8 +32,7 @@ public class AddTwoNumbers {
             num2 = num2 + curr.val * multiplicant;
             curr = curr.next;
             multiplicant *= 10;
-        }
-        ;
+        };
         //
         long sum = num1 + num2;
         long quotient = sum;
@@ -56,6 +54,84 @@ public class AddTwoNumbers {
                 break;
         }
         return head;
+    }
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int carryOver = 0;
+        ListNode curr1 = l1;
+        ListNode curr2 = l2;
+        ListNode head = null, tail = null;
+        while(curr1 != null && curr2 != null) {
+            int sum = carryOver + curr1.val + curr2.val;
+            carryOver = sum / 10;
+            int remainder = sum % 10;
+            // insert new Node
+            ListNode node = new ListNode(remainder);
+            if (head == null) {
+                head = node;
+                tail = node;
+            } else {
+                tail.next = node;
+                tail = node;
+            }
+            curr1 = curr1.next;
+            curr2 = curr2.next;
+        }
+        // add the rest of l1
+        while(curr1 != null) {
+            int sum = carryOver + curr1.val;
+            carryOver = sum / 10;
+            int remainder = sum % 10;
+            // insert new Node
+            ListNode node = new ListNode(remainder);
+            if (head == null) {
+                head = node;
+                tail = node;
+            } else {
+                tail.next = node;
+                tail = node;
+            }
+            curr1 = curr1.next;
+        }
+        // add the rest of l2
+        while(curr2 != null) {
+            int sum = carryOver + curr2.val;
+            carryOver = sum / 10;
+            int remainder = sum % 10;
+            // insert new Node
+            ListNode node = new ListNode(remainder);
+            if (head == null) {
+                head = node;
+                tail = node;
+            } else {
+                tail.next = node;
+                tail = node;
+            }
+            curr2 = curr2.next;
+        }
+        // create a node for carryOver if it is not zero
+        if (carryOver > 0) {
+            ListNode node = new ListNode(carryOver);
+            if (head == null) {
+                head = node;
+                tail = node;
+            } else {
+                tail.next = node;
+                tail = node;
+            }            
+        }
+        return head;
+    }
+    
+    private void insertNode(int val, ListNode head, ListNode tail) {
+        ListNode node = new ListNode(val);
+        if (head == null) {
+            head = node;
+            tail = node;
+        } else {
+            tail.next = node;
+            tail = node;
+        }                    
     }
 
     public ListNode constructList(int[] inputs) {
