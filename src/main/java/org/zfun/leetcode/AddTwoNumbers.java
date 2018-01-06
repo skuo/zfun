@@ -13,49 +13,6 @@ Output: 7 -> 0 -> 8
 Explanation: 342 + 465 = 807.
  */
 public class AddTwoNumbers {
-    // 1560 / 1562 test cases passed.
-    public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
-        // reconstitute num1
-        long num1 = 0;
-        long multiplicant = 1;
-        ListNode curr = l1;
-        while (curr != null) {
-            num1 = num1 + curr.val * multiplicant;
-            curr = curr.next;
-            multiplicant *= 10;
-        };
-        // reconstitute num2
-        long num2 = 0;
-        multiplicant = 1;
-        curr = l2;
-        while (curr != null) {
-            num2 = num2 + curr.val * multiplicant;
-            curr = curr.next;
-            multiplicant *= 10;
-        };
-        //
-        long sum = num1 + num2;
-        long quotient = sum;
-        ListNode head = null;
-        ListNode tail = null;
-        while (quotient > 0 || sum == 0) {
-            long remainder = quotient % 10;
-            ListNode node = new ListNode((int) remainder);
-            if (head == null) {
-                head = node;
-                tail = node;
-            } else {
-                tail.next = node;
-                tail = node;
-            }
-            quotient = quotient / 10;
-            // if sum is 0, break;
-            if (sum == 0)
-                break;
-        }
-        return head;
-    }
-
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         int carryOver = 0;
         ListNode curr1 = l1;
@@ -123,7 +80,8 @@ public class AddTwoNumbers {
         return head;
     }
     
-    private void insertNode(int val, ListNode head, ListNode tail) {
+    // not used since it requires a public private class that is hard to inlucde in leetcode
+    public void insertNode(int val, ListNode head, ListNode tail) {
         ListNode node = new ListNode(val);
         if (head == null) {
             head = node;
