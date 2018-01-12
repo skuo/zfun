@@ -9,26 +9,22 @@ and [3,4,-1,1] return 2.
  */
 public class FirstMissingPositive {
     public int firstMissingPositive(int[] nums) {
-        if (nums == null || nums.length == 0)
-            return 0;
-        
-        int sum = 0, min = Integer.MAX_VALUE, max = 0;
+        // nums should be from [1..nums.length]
+        int[] posInts = new int[nums.length+1];
+        // set value in posInts
         for (int i=0; i<nums.length; i++) {
-            if (nums[i] > 0) {
-                sum += nums[i];
-                min = Math.min(min, nums[i]);
-                max = Math.min(max, nums[i]);
+            if (0 < nums[i] && nums[i] <= nums.length)
+                posInts[nums[i]] = nums[i];
+        }
+        // iterate and find the first missing posInt
+        int missingPosInt = nums.length + 1;
+        for (int i=1; i<=nums.length; i++) {
+            if (posInts[i] == 0) {
+                missingPosInt = i;
+                break;
             }
         }
-        
-        int expectedTotal = (min+max)*(max-min+1)/2;
-        int missingInt = expectedTotal - sum;
-        
-        // if missingInt == 0, then return max+1
-        if (missingInt == 0)
-            return max + 1;
-        else
-            return missingInt;
+        return missingPosInt;
     }
     
     public static void main(String[] args) {
@@ -36,5 +32,6 @@ public class FirstMissingPositive {
         
         int[] nums = {1,2,0};
         int missingPos = obj.firstMissingPositive(nums);
+        System.out.println(missingPos); // 3
     }
 }
