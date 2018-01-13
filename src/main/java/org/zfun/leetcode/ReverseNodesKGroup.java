@@ -1,7 +1,5 @@
 package org.zfun.leetcode;
 
-import org.zfun.leetcode.RemoveNthNodeFromEnd.ListNode;
-
 public class ReverseNodesKGroup {
     public class ListNode {
         int val;
@@ -12,12 +10,12 @@ public class ReverseNodesKGroup {
         }
     }
 
-    // validate all inputs: head and k
     public ListNode reverseKGroup(ListNode head, int k) {
+        // validate all inputs: head and k
         if (k < 2)
             return head;
-        
-        ListNode curr = head;
+
+        ListNode curr = head, tail = null;
         ListNode[] nodes = new ListNode[k];
         int numReverses = 0;
         int count = 0;
@@ -27,25 +25,29 @@ public class ReverseNodesKGroup {
             curr = curr.next;
             if (count == k) {
                 // reverse
-                for (int i = k-1; i > 0; i--) {
-                    nodes[i].next = nodes[i-1];
+                for (int i = k - 1; i > 0; i--) {
+                    nodes[i].next = nodes[i - 1];
                 }
                 nodes[0].next = curr;
-                
+
                 if (numReverses == 0)
-                    head = nodes[k-1];
+                    head = nodes[k - 1];
+                else
+                    tail.next = nodes[k - 1];
+                tail = nodes[0];
+
                 count = 0;
                 numReverses++;
-            } 
+            }
         }
-        
+
         return head;
     }
-    
+
     public ListNode constructNodes(int[] ints) {
         ListNode head = null, curr = null;
         int count = 0;
-        for (int x: ints) {
+        for (int x : ints) {
             ListNode node = new ListNode(x);
             if (count == 0) {
                 head = node;
@@ -57,7 +59,7 @@ public class ReverseNodesKGroup {
         }
         return head;
     }
-    
+
     public void printNodes(ListNode head) {
         ListNode curr = head;
         System.out.print("[");
@@ -70,9 +72,13 @@ public class ReverseNodesKGroup {
 
     public static void main(String[] args) {
         ReverseNodesKGroup obj = new ReverseNodesKGroup();
-        
-        ListNode head = obj.constructNodes(new int[] {1,2});
+
+        ListNode head = obj.constructNodes(new int[] { 1, 2 });
         head = obj.reverseKGroup(head, 2);
-        obj.printNodes(head);        
+        obj.printNodes(head);
+
+        head = obj.constructNodes(new int[] { 1, 2, 3, 4 });
+        head = obj.reverseKGroup(head, 2);
+        obj.printNodes(head);
     }
 }
