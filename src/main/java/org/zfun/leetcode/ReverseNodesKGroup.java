@@ -30,6 +30,7 @@ public class ReverseNodesKGroup {
                 }
                 nodes[0].next = curr;
 
+                // link up head and groups
                 if (numReverses == 0)
                     head = nodes[k - 1];
                 else
