@@ -132,6 +132,8 @@ def question_8():
 # question 9
 # A decorator is a special kind of function that either takes a function and returns a function, 
 # or takes a class and returns a class.
+#
+# https://realpython.com/blog/python/instance-class-and-static-methods-demystified/
 #--------------------
 class Celsius:
     def __init__(self, temperature = 0):
@@ -278,6 +280,15 @@ def question_11():
     oRoot.print_all_2() # generator/yield
                         # root, 1, 2, 3, 4, 5, 6, 8, 9, 7, 10
 
+#--------------------
+# Use yield to implement iterable
+#--------------------
+def counter(low, high):
+    current = low
+    while current <= high:
+        yield current
+        current += 1
+
 #=====================================================================                
 # main 
 #=====================================================================   
@@ -303,5 +314,7 @@ print man.__dict__
     
 #question_10()
 
-question_11()
+#question_11()
 
+for c in counter(3, 8):
+    print c
